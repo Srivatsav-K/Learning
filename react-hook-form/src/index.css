@@ -1,0 +1,29 @@
+#root {
+  font-family: sans-serif;
+  margin-top: 20vh;
+  font-size: larger;
+  display: flex;
+  justify-content: center;
+}
+
+a {
+  display: block;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="submit"],
+input[type="number"],
+input[type="date"] {
+  display: block;
+  min-width: 20vw;
+  min-height: 25px;
+}
+
+.form-control {
+  margin-bottom: 0.5rem;
+}
+
+.error {
+  color: red;
+}
