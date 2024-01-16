@@ -67,3 +67,28 @@ You can opt out of caching by:
 
 3. Using Dynamic Functions like cookies and headers.
 4. The Segment Config Options manually specifies dynamic mode.
+
+### Build
+
+- Build the app by running `pnpm run build`
+
+- We can see here that `/api/hello` is static whereas `/api/echo` and `/api/feedback` are dynamic
+
+```
+Route (app)                              Size     First Load JS
+┌ ○ /                                    6.94 kB        88.8 kB
+├ ○ /_not-found                          868 B          82.7 kB
+├ λ /api/echo                            0 B                0 B
+├ λ /api/feedback                        0 B                0 B
+├ ○ /api/hello                           0 B                0 B
+└ ○ /feedback                            1.03 kB        82.9 kB
++ First Load JS shared by all            81.9 kB
+  ├ chunks/543-85655ab48a4a5dbd.js       26.7 kB
+  ├ chunks/d16e89e2-6dbb92bb54a537ee.js  53.3 kB
+  ├ chunks/main-app-d1d6e48918eefca3.js  220 B
+  └ chunks/webpack-42984339bc7aa02d.js   1.65 kB
+
+
+○  (Static)   prerendered as static content
+λ  (Dynamic)  server-rendered on demand using Node.js
+```
