@@ -41,12 +41,16 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
+/.pnp
+.pnp.js
+.yarn/install-state.gz
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
 
-# TypeScript cache
+# TypeScript
 *.tsbuildinfo
+next-env.d.ts
 
 # Optional npm cache directory
 .npm
@@ -74,22 +78,25 @@ web_modules/
 
 # dotenv environment variable files
 .env
-.env.development.local
-.env.test.local
-.env.production.local
-.env.local
+.env*.local
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 .parcel-cache
 
-# Next.js build output
-.next
-out
+# next.js
+/.next/
+/out/
+
+# production
+build
+dist
+
+# vercel
+.vercel
 
 # Nuxt.js build / generate output
 .nuxt
-dist
 
 # Gatsby files
 .cache/
@@ -132,7 +139,7 @@ dist
 dist-ssr
 *.local
 
-# Editor directories and files
+# Editor directories and misc
 .vscode
 !.vscode/extensions.json
 .idea
@@ -142,3 +149,4 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+*.pem
