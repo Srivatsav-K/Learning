@@ -41,16 +41,12 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
-/.pnp
-.pnp.js
-.yarn/install-state.gz
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
 
 # TypeScript
 *.tsbuildinfo
-next-env.d.ts
 
 # Optional npm cache directory
 .npm
@@ -85,8 +81,9 @@ next-env.d.ts
 .parcel-cache
 
 # next.js
-/.next/
-/out/
+.next
+out
+next-env.d.ts
 
 # production
 build
