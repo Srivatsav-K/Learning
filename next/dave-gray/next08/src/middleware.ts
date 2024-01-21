@@ -11,3 +11,7 @@ export const middleware = async (req: Request) => {
 
   return NextResponse.next();
 };
+
+export const config = {
+  matcher: "/api/:path*", // middleware will run only in this path
+};
