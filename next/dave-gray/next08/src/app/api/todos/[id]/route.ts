@@ -1,11 +1,17 @@
+type Props = {
+  params: {
+    id: string;
+  };
+};
+
 const DATA_SOURCE_URL = "https://jsonplaceholder.typicode.com/todos";
 
 const API_KEY = process.env.DATA_API_KEY!;
 
 // Dynamic route handlers
-export const GET = async (req: Request) => {
+export const GET = async (req: Request, { params: { id } }: Props) => {
   const url = new URL(req.url);
-  const id = url.pathname.slice(url.pathname.lastIndexOf("/") + 1);
+  //const id = url.pathname.slice(url.pathname.lastIndexOf("/") + 1);
 
   const res = await fetch(`${DATA_SOURCE_URL}/${id}`, {
     headers: {
@@ -20,9 +26,9 @@ export const GET = async (req: Request) => {
   return Response.json(todo);
 };
 
-export const DELETE = async (req: Request) => {
+export const DELETE = async (req: Request, { params: { id } }: Props) => {
   const url = new URL(req.url);
-  const id = url.pathname.slice(url.pathname.lastIndexOf("/") + 1);
+  //const id = url.pathname.slice(url.pathname.lastIndexOf("/") + 1);
 
   const res = await fetch(`${DATA_SOURCE_URL}/${id}`, {
     method: "DELETE",
