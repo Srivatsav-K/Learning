@@ -1,3 +1,5 @@
+// This file runs only on the edge runtime (https://nextjs.org/docs/app/building-your-application/routing/middleware#runtime). Therefore many npm packages that use node APIs cannot be used here.
+
 import { NextResponse } from "next/server";
 
 export const middleware = async (req: Request) => {

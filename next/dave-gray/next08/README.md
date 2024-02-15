@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# REST API & Middlewares
 
-## Getting Started
+## REST API
 
-First, run the development server:
+- REST API's can be built & exposed using next.js.
+- The following HTTP methods are supported: GET, POST, PUT, PATCH, DELETE, HEAD, and OPTIONS. If an unsupported method is called, Next.js will return a 405 Method Not Allowed response.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## How to create
+
+```
+📦api
+┗ 📂todos
+  ┣ 📂[id]
+  ┃ ┗ 📜route.ts
+  ┗ 📜route.ts
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Export a named function named after the HTTP method.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```ts
+// file - /app/api/todos/route.ts
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+const DATA_SOURCE_URL = "https://jsonplaceholder.typicode.com/todos";
 
-## Learn More
+const API_KEY = process.env.DATA_API_KEY!;
 
-To learn more about Next.js, take a look at the following resources:
+export const POST = async (req: Request) => {
+  const body = await req.json();
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  if (!body.userId || !body.title) throw new Error("Missing required fields");
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+  const res = await fetch(DATA_SOURCE_URL, {
+    method: "POST",
+    headers: {
+      "API-KEY": API_KEY,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
 
-## Deploy on Vercel
+  if (!res.ok) throw new Error("Error creating todo");
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+  const data = await res.json();
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+  return Response.json(data);
+};
+
+//How to access this => POST "http://localhost:3000/api/todos"
+```
+
+### Dynamic route handlers
+
+```ts
+// file - /app/api/todos/[id]/route.ts
+
+// Dynamic route handlers
+
+type Props = {
+  params: {
+    id: string;
+  };
+};
+export const GET = async (req: Request, { params: { id } }: Props) => {
+  const url = new URL(req.url);
+  //const id = url.pathname.slice(url.pathname.lastIndexOf("/") + 1);
+
+  const res = await fetch(`${DATA_SOURCE_URL}/${id}`, {
+    headers: {
+      "API-KEY": API_KEY,
+    },
+  });
+
+  if (!res.ok) throw new Error("Error fetching todos");
+
+  const todo: ToDo = await res.json();
+
+  return Response.json(todo);
+};
+
+// How to access => GET "http://localhost:3000/api/todos/1"
+```
