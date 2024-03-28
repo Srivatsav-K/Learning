@@ -147,3 +147,6 @@ dist-ssr
 *.sln
 *.sw?
 *.pem
+
+# drizzle output folder
+drizzle
