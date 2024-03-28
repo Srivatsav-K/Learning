@@ -1,30 +1,18 @@
 import { getAllQuotes } from "./getAllQuotes";
 
-const prevQuoteObj = {
-  prevQuoteIndex: 1,
-  setPrevQuoteIndex: function (index: number) {
-    this.prevQuoteIndex = index;
-  },
-};
-
-export const getRandomQuote = async () => {
+export const getRandomQuote = async (id: string) => {
   const quotes = await getAllQuotes();
-  console.log("🚀 ~ getRandomQuote ~ quotes:", quotes);
-
   if (!quotes.length) return null;
 
-  let randomIndex = prevQuoteObj.prevQuoteIndex;
-  console.log("🚀 ~ getRandomQuote ~ randomIndex:", randomIndex);
+  const prevQuoteId = +id;
 
-  while (randomIndex === prevQuoteObj.prevQuoteIndex) {
-    randomIndex = Math.floor(Math.random() * quotes.length);
+  // if data is requested with an id, return any other data whose id is different from the requested id
+  let randomId = prevQuoteId;
+  const ids = quotes.map((quote) => quote.id);
+
+  while (randomId === prevQuoteId) {
+    randomId = ids[Math.floor(Math.random() * ids.length)];
   }
 
-  prevQuoteObj.setPrevQuoteIndex(randomIndex);
-
-  console.log(
-    "🚀 ~ getRandomQuote ~ quotes[randomIndex]:",
-    quotes[randomIndex]
-  );
-  return quotes[randomIndex];
+  return quotes.find((quote) => quote.id === randomId);
 };
